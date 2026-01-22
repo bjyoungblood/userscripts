@@ -12,7 +12,6 @@
     'use strict';
 
     let run = () => {
-        console.log('run', window.location);
         setTimeout(() => {
             if (window.location.pathname == '/start/' && window.location.hash.startsWith('#/device')) {
                 let el = document.querySelector("button#cli_verification_btn");
@@ -33,7 +32,5 @@
 
     run();
 
-    if (window.onurlchange === null) {
-        window.addEventListener('urlchange', () => run());
-    }
+    window.addEventListener('urlchange', () => run());
 })();
