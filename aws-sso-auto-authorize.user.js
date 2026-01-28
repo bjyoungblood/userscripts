@@ -11,26 +11,29 @@
 (function() {
     'use strict';
 
-    let run = () => {
-        setTimeout(() => {
-            if (window.location.pathname == '/start/' && window.location.hash.startsWith('#/device')) {
-                let el = document.querySelector("button#cli_verification_btn");
-                if (el) {
-                    el.click();
-                }
-            }
+    let clickedBtn1 = false;
+    let clickedBtn2 = false;
 
-            if (window.location.hash.startsWith('#/?clientId=')) {
-                document.querySelector('button[data-analytics=consent-allow-access]').click();
+    function run() {
+        if (!clickedBtn1 && window.location.pathname == '/start/' && window.location.hash.startsWith('#/device')) {
+            let el = document.querySelector("button#cli_verification_btn");
+            if (el) {
+                el.click();
+                clickedBtn1 = true;
             }
+        }
 
-            if (document.body.textContent.includes('You have approved the request for access')) {
-                window.close();
-            }
-        }, 1500);
+        if (!clickedBtn2 && window.location.hash.startsWith('#/?clientId=')) {
+            document.querySelector('button[data-analytics=consent-allow-access]')?.click();
+            clickedBtn2 = true;
+        }
+
+        if (document.body.textContent.includes('You have approved the request for access')) {
+            window.close();
+        }
     };
 
     run();
 
-    window.addEventListener('urlchange', () => run());
+    setInterval(run, 1000);
 })();
